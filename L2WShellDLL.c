@@ -7,8 +7,8 @@
 #define MAX_LINE 1024
 #define MAX_ARGS 16
 
-int __declspec(dllexport) __cdecl ParseCommand(char *line, char *args[], int limit);
-static int __stdcall ParseCommand(char *line, char *args[], int limit)
+// int __declspec(dllexport) __cdecl ParseCommand(char *line, char *args[], int limit);
+int __declspec(dllexport) __cdecl ParseCommand(char *line, char *args[], int limit)
 {
     int count = 0;
     char *readp = line;
@@ -84,8 +84,7 @@ static int append_token(char *out, size_t capacity, const char *token)
     return 1;
 }
 
-static int __stdcall ExecCommand(
-    const char *windows_verb, const char *const args[], int argc)
+int __declspec(dllexport) __cdecl ExecuteCommand(const char *windows_verb, const char *const args[], int argc)
 {
     char command[MAX_LINE * 2] = {0};
     char cmdline[MAX_LINE * 2 + 64];
@@ -124,9 +123,4 @@ static int __stdcall ExecCommand(
     CloseHandle(pi.hThread);
     CloseHandle(pi.hProcess);
     return (int)code;
-}
-
-int __declspec(dllexport) __cdecl ExecuteCommand(void)
-{
-    return 0;
 }
